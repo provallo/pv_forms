@@ -32,7 +32,7 @@
                     </label>
                     <v-input type="text" id="label" v-model="editingModel.label"></v-input>
                 </div>
-                <div class="form-item">
+                <div class="form-item" :key="editingModel.id">
                     <v-form-builder v-model="editingModel.data" ref="formBuilder"></v-form-builder>
                 </div>
             </v-form>

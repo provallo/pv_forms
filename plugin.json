@@ -2,7 +2,7 @@
   "packageID": "pv_forms",
   "name": "pv_forms",
   "label": "Forms",
-  "description": "An integration of jQuery formBuilder",
+  "description": "A simple form builder for the frontend",
   "author": "tyurderi",
   "website": "https://www.yurderi.de",
   "email": "tyurderi@yahoo.de",

@@ -1,10 +1,11 @@
 <template>
     <div class="form-builder">
         <div class="form-items">
-            <v-form-item v-for="(item, key) in config.items" v-model="config.items[key]"
+            <v-form-item v-for="(item, key) in sortedItems" v-model="config.items[key]"
                          :key="key" :editing="editingItem && editingItem.id === item.id"
                          :item="getAvailableItem(item.itemRef)"
-                         @close="editingItem = null" @remove="remove(item)" @edit="editingItem = item">
+                         @close="editingItem = null" @remove="remove(item)" @edit="editingItem = item"
+                         @moveUp="moveUp(item)" @moveDown="moveDown(item)">
                 
             </v-form-item>
         </div>
@@ -43,6 +44,15 @@ export default {
             required: true
         }
     },
+    computed: {
+        sortedItems() {
+            let me = this
+            
+            return me.config.items.sort((a, b) => {
+                return a.position - b.position
+            })
+        }
+    },
     mounted () {
         let me = this
         
@@ -69,7 +79,7 @@ export default {
                 id: ++me.config.id,
                 itemRef: item.id,
                 config: {},
-                position: 1
+                position: me.getPosition()
             }
             
             item.config.forEach(configEl => {
@@ -93,6 +103,16 @@ export default {
             me.editingItem = data
             me.config.items.push(data)
         },
+        getPosition () {
+            let me = this
+            let position = 0
+            
+            me.config.items.forEach(item => {
+                position = item.position
+            })
+            
+            return position + 1
+        },
         getAvailableItem (id) {
             let me = this
             
@@ -105,6 +125,39 @@ export default {
             if (index > -1) {
                 me.config.items.splice(index, 1)
             }
+        },
+        moveUp (item) {
+            let me = this
+            let currentIndex = me.sortedItems.indexOf(item)
+    
+            if (currentIndex >= 1) {
+                let prevItem = me.sortedItems[currentIndex - 1]
+                let prevIndex = me.config.items.indexOf(prevItem)
+                let thisIndex = me.config.items.indexOf(item)
+    
+                me.swapPosition(prevIndex, thisIndex)
+            }
+        },
+        moveDown (item) {
+            let me = this
+            let currentIndex = me.sortedItems.indexOf(item)
+    
+            if (currentIndex < me.config.items.length) {
+                let nextItem = me.sortedItems[currentIndex + 1]
+                let nextIndex = me.config.items.indexOf(nextItem)
+                let thisIndex = me.config.items.indexOf(item)
+        
+                me.swapPosition(nextIndex, thisIndex)
+            }
+        },
+        swapPosition (a, b) {
+            let me = this
+            let aItem = me.config.items[a]
+            let bItem = me.config.items[b]
+            let pos = aItem.position
+    
+            aItem.position = bItem.position
+            bItem.position = pos
         }
     }
 }

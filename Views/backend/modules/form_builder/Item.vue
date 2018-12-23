@@ -4,6 +4,12 @@
             {{ label }}
         </div>
         <ul class="item-actions">
+            <li @click="moveUp">
+                <fa icon="chevron-up"></fa>
+            </li>
+            <li @click="moveDown">
+                <fa icon="chevron-down"></fa>
+            </li>
             <li @click="edit">
                 <fa icon="pencil-alt"></fa>
             </li>
@@ -98,6 +104,16 @@ export default {
             let me = this
             
             me.$emit('edit')
+        },
+        moveUp () {
+            let me = this
+            
+            me.$emit('moveUp')
+        },
+        moveDown () {
+            let me = this
+            
+            me.$emit('moveDown')
         }
     }
 }
