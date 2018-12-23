@@ -1,0 +1,63 @@
+<form action="{{ url('frontend/form/submit') }}" type="post" class="form">
+    <div class="success-text">
+        {{ form.successText }}
+    </div>
+
+    {% for item in form.data.items %}
+        {% set name = 'data[' ~ item.id ~ ']' %}
+
+        {% if item.itemRef == 1 %}
+            <h1 class="{{ item.config.css }}">
+                {{ item.config.title }}
+            </h1>
+        {% elseif item.itemRef == 2 %}
+            <p class="{{ item.config.css }}">
+                {{ item.config.paragraph }}
+            </p>
+        {% elseif item.itemRef == 3 %}
+            <div class="form-item is--{{ item.config.type }} {{ item.config.css }}">
+                <label for="{{ name }}">
+                    {{ item.config.label }}
+                </label>
+
+                {% if item.config.type == 'textarea' %}
+                    <textarea name="{{ name }}" id="{{ name }}" cols="30" rows="10" placeholder="{{ item.config.placeholder }}"{% if item.config.required %} required{% endif %}>{{ item.config.value }}</textarea>
+                {% else %}
+                    <input type="{{ item.config.type }}" name="{{ name }}" id="{{ name }}" placeholder="{{ item.config.placeholder }}"{% if item.config.required %} required{% endif %}>
+                {% endif %}
+            </div>
+        {% elseif item.itemRef == 4 %}
+            <div class="form-item is--select {{ item.config.css }}">
+                <label for="{{ name }}">
+                    {{ item.config.label }}
+                </label>
+                <select name="{{ name }}" id="{{ name }}"{% if item.config.required %} required{% endif %}>
+                    <option selected value="" disabled>Please select</option>
+                    {% for option in item.config.values %}
+                        <option value="{{ option }}">
+                            {{ option }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% elseif item.itemRef == 5 %}
+            <div class="form-item is--checkbox {{ item.config.css }}">
+                <input type="checkbox" name="{{ name }}" id="{{ name }}">
+
+                <label for="{{ name }}">
+                    {{ item.config.label }}
+                </label>
+            </div>
+        {% elseif item.itemRef == 6 %}
+            <div class="form-item is--button {{ item.config.css }}">
+                <button type="{{ item.config.type }}">
+                    {{ item.config.label }}
+                </button>
+            </div>
+        {% else %}
+            Unknown element
+        {% endif %}
+    {% endfor %}
+
+    <input type="hidden" name="id" value="{{ form.id }}">
+</form>

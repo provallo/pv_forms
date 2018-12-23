@@ -15,6 +15,8 @@ class Form extends Entity
     
     public $data;
     
+    public $successText;
+    
     public $created;
     
     public $changed;
@@ -27,6 +29,9 @@ class Form extends Entity
             ],
             'data'  => [
                 'required' => 'The form configuration can not be empty'
+            ],
+            'successText' => [
+                'required' => 'Please enter a success text'
             ]
         ];
     }

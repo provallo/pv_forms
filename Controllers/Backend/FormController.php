@@ -25,8 +25,9 @@ class FormController extends API
     {
         $entity->changed = date('Y-m-d H:i:s');
         
-        $entity->label = $input['label'];
-        $entity->data  = $input['data'];
+        $entity->label       = $input['label'];
+        $entity->data        = $input['data'];
+        $entity->successText = $input['successText'];
     }
     
 }

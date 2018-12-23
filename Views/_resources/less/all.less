@@ -1,0 +1,61 @@
+form.form {
+  transition: opacity 0.25s ease;
+  div.success-text {
+    border: 1px solid #2ecc71;
+    border-left-width: 5px;
+    padding: 10px;
+    margin: 0 0 10px 0;
+    display: none;
+  }
+  h1 {
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+  }
+  p {
+    margin: 0;
+    padding: 15px 0;
+  }
+  &.sending {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  div.form-item {
+    margin: 0 0 5px 0;
+    label {
+      display: block;
+    }
+    input[type=text],
+    input[type=email],
+    input[type=password],
+    input[type=number],
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 5px;
+      font-size: 14px;
+      outline: 0 none;
+      background: #fff;
+      &:focus {
+        border-color: #3498db;
+      }
+    }
+    &.is--checkbox {
+      label {
+        display: inline-block;
+        font-size: 14px;
+      }
+    }
+    button {
+      border: 1px solid #ccc;
+      padding: 10px 30px;
+      font-size: 14px;
+      &:hover {
+        border-color: #3498db;
+        cursor: pointer;
+      }
+    }
+  }
+}
