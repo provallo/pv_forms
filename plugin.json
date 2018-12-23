@@ -1,0 +1,19 @@
+{
+  "packageID": "pv_forms",
+  "name": "pv_forms",
+  "label": "Forms",
+  "description": "An integration of jQuery formBuilder",
+  "author": "tyurderi",
+  "website": "https://www.yurderi.de",
+  "email": "tyurderi@yahoo.de",
+  "version": "1.0.0",
+  "changelog": {
+    "1.0.0": [
+      "Initial release"
+    ]
+  },
+  "package": {
+    "channel": "stable",
+    "platform": "provallo-plugin"
+  }
+}
