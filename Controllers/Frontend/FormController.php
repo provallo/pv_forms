@@ -18,32 +18,14 @@ class FormController extends Controller
         if ($form instanceof Form)
         {
             $data   = json_decode($form->data, true);
-            $result = [];
+            $result = $this->getResult($data, $formData);
             
-            foreach ($data['items'] as $item)
-            {
-                $value = null;
-                
-                switch ((int) $item['itemRef'])
-                {
-                    case 1:
-                    case 2:
-                    case 6:
-                        $value = null;
-                    break;
-                    case 5:
-                        $value = isset($formData[$item['id']]);
-                    break;
-                    default:
-                        $value = $formData[$item['id']];
-                }
-                
-                $result[$item['id']] = $value;
-            }
+            $template = $form->submissionTemplate;
+            $template = strtr($template, $result);
             
             $submission = Submission::create();
             $submission->formID  = $form->id;
-            $submission->data    = json_encode($result);
+            $submission->data    = $template;
             $submission->created = date('Y-m-d H:i:s');
             $submission->save();
             
@@ -53,6 +35,34 @@ class FormController extends Controller
         return self::json()->failure([
             'message' => 'Form by id not found'
         ]);
+    }
+    
+    protected function getResult ($data, $formData)
+    {
+        $result = [];
+    
+        foreach ($data['items'] as $item)
+        {
+            $value = null;
+        
+            switch ((int) $item['itemRef'])
+            {
+                case 1:
+                case 2:
+                case 6:
+                    $value = null;
+                break;
+                case 5:
+                    $value = isset($formData[$item['id']]) ? 'Yes' : 'No';
+                break;
+                default:
+                    $value = $formData[$item['id']];
+            }
+        
+            $result['$' . $item['id']] = $value;
+        }
+        
+        return $result;
     }
     
 }

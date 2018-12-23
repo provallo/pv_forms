@@ -4,6 +4,7 @@ export default {
         { name: 'label', type: 'string', filterable: true },
         { name: 'data', type: 'string' },
         { name: 'successText', type: 'string', filterable: true },
+        { name: 'submissionTemplate', type: 'string', filterable: true },
         { name: 'created', type: 'string' },
         { name: 'changed', type: 'string' },
     ],

@@ -1,6 +1,9 @@
 <template>
     <div class="item">
         <div class="item-label">
+            <div class="item-id">
+                {{ value.id }}
+            </div>
             {{ label }}
         </div>
         <ul class="item-actions">

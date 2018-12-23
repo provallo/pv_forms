@@ -16,6 +16,13 @@ class Bootstrap extends \ProVallo\Components\Plugin\Bootstrap
         return true;
     }
     
+    public function update ($previousVersion)
+    {
+        $this->installDB();
+        
+        return true;
+    }
+    
     public function execute()
     {
         // Register custom controllers

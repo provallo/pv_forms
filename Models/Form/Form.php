@@ -17,6 +17,8 @@ class Form extends Entity
     
     public $successText;
     
+    public $submissionTemplate;
+    
     public $created;
     
     public $changed;
@@ -32,6 +34,9 @@ class Form extends Entity
             ],
             'successText' => [
                 'required' => 'Please enter a success text'
+            ],
+            'submissionTemplate' => [
+                'required' => 'Please enter a submission template'
             ]
         ];
     }

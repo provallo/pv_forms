@@ -16,38 +16,27 @@
             </div>
         </v-grid>
         <v-detail :disabled="!editingModel">
-            <v-form v-if="editingModel"
-                    @submit="submit" :buttons="formButtons"
-                    :style="{ maxWidth: '1000px' }"
-                    ref="form">
-                <div class="form-item" v-if="editingModel.id > 0">
-                    <label for="id">
-                        ID
-                    </label>
-                    <v-input type="text" id="id" :value="editingModel.id.toString()" readonly></v-input>
-                </div>
-                <div class="form-item">
-                    <label for="label">
-                        Label
-                    </label>
-                    <v-input type="text" id="label" v-model="editingModel.label"></v-input>
-                </div>
-                <div class="form-item">
-                    <label for="successText">
-                        Success Text
-                    </label>
-                    <v-input type="textarea" id="successText" v-model="editingModel.successText"></v-input>
-                </div>
-                <div class="form-item" :key="editingModel.id">
-                    <v-form-builder v-model="editingModel.data" ref="formBuilder"></v-form-builder>
-                </div>
-            </v-form>
+            <v-tab-menu v-if="editingModel" :key="editingModel.id">
+                <v-tab id="detail" label="Detail">
+                     <v-form-form v-model="editingModel" :grid="$refs.grid" ref="form"></v-form-form>
+                </v-tab>
+                <v-tab id="submission" label="Submissions" v-if="editingModel.id > 0" class="submission-tab">
+                    <v-submissions :form="editingModel"></v-submissions>
+                </v-tab>
+            </v-tab-menu>
         </v-detail>
     </div>
 </template>
 
 <script>
+import VFormForm from './Form'
+import VSubmissions from './Submissions'
+
 export default {
+    components: {
+        VFormForm,
+        VSubmissions
+    },
     data() {
         let me = this
         
@@ -55,13 +44,6 @@ export default {
             gridConfig: {
                 model: me.$models.form
             },
-            formButtons: [
-                {
-                    label: 'Save',
-                    primary: true,
-                    name: 'submit'
-                }
-            ],
             editingModel: null
         }
     },
@@ -82,28 +64,6 @@ export default {
             
             me.editingModel = model
             me.$nextTick(() => me.$refs.form.reset())
-        },
-        submit ({ setMessage, setLoading, setProgress }) {
-            let me = this
-            
-            me.editingModel.data = me.$refs.formBuilder.toString()
-            
-            setLoading(true)
-            me.$models.form.save(me.editingModel).then(({ success, data, messages }) => {
-                if (success) {
-                    setMessage('success', 'The form were saved successfully')
-                    setLoading(false)
-                    
-                    me.editingModel.id = data.id
-                    me.$refs.grid.load()
-                } else {
-                    setMessage('error', messages[0])
-                    setLoading(false)
-                }
-            }).catch(error => {
-                setMessage('error', error.toString())
-                setLoading(false)
-            })
         },
         remove (model) {
             let me = this

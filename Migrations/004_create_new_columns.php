@@ -11,8 +11,8 @@ class Migration_4 extends Migration
     {
         $this->addSQL('
             ALTER TABLE `form`
-              ADD COLUMN `successText` TEXT NOT NULL
-              AFTER `data`;
+              ADD COLUMN `successText` TEXT NOT NULL AFTER `data`,
+              ADD COLUMN `submissionTemplate` TEXT NOT NULL AFTER `successText`;
         ');
     }
     
