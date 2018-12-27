@@ -1,5 +1,5 @@
 <template>
-    <div class="is--page-view view">
+    <div class="is--form-view view">
         <v-grid ref="grid" :config="gridConfig" @create="create">
             <div class="grid-item user" slot="item" slot-scope="{ model }"
                  :class="{ active: editingModel && editingModel.id === model.id }">

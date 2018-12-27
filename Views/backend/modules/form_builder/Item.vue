@@ -34,6 +34,15 @@
                     </label>
                     <v-input type="textarea" :id="item.name" v-model="value.config[item.name]"></v-input>
                 </template>
+                <template v-else-if="item.type === 'markdown'">
+                    <label :for="item.name">
+                        {{ item.label }}
+                        <small>
+                            (<a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown</a> is supported)
+                        </small>
+                    </label>
+                    <v-input type="textarea" :id="item.name" v-model="value.config[item.name]" class="is--markdown"></v-input>
+                </template>
                 <template v-else-if="item.type === 'checkbox'">
                     <v-checkbox :name="item.name" :label="item.label" v-model="value.config[item.name]"></v-checkbox>
                 </template>

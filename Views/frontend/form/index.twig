@@ -11,9 +11,9 @@
                 {{ item.config.title }}
             </h1>
         {% elseif item.itemRef == 2 %}
-            <p class="{{ item.config.css }}">
-                {{ item.config.paragraph }}
-            </p>
+            <div class="paragraph {{ item.config.css }}">
+                {{ markdown(item.config.paragraph) }}
+            </div>
         {% elseif item.itemRef == 3 %}
             <div class="form-item is--{{ item.config.type }} {{ item.config.css }}">
                 <label for="{{ name }}">

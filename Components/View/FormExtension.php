@@ -15,7 +15,7 @@ class FormExtension extends \Twig_Extension
     
     public function getFunctions()
     {
-        $functions = ['form'];
+        $functions = ['form', 'markdown'];
         $result    = [];
         
         foreach($functions as $functionName)
@@ -24,6 +24,14 @@ class FormExtension extends \Twig_Extension
         }
         
         return $result;
+    }
+    
+    public function markdownFunction ($data)
+    {
+        $parser = new \Parsedown();
+        $parser->setSafeMode(true);
+        
+        return $parser->parse($data);
     }
     
     public function formFunction ($formID)

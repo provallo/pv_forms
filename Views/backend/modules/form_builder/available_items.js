@@ -26,7 +26,7 @@ export default [
                 label: 'Paragraph',
                 
                 main: 1,
-                type: 'textarea'
+                type: 'markdown'
             },
             {
                 name: 'css',
