@@ -36,6 +36,8 @@ class FormExtension extends \Twig_Extension
     
     public function formFunction ($formID)
     {
+        Core::view()->loader()->addPath(path(__DIR__ . '/../../', 'Views'));
+        
         $form    = Form::repository()->find($formID);
         $context = [];
         
