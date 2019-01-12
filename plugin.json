@@ -6,7 +6,7 @@
   "author": "tyurderi",
   "website": "https://www.yurderi.de",
   "email": "tyurderi@yahoo.de",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "changelog": {
     "1.0.0": [
       "Initial release"
@@ -20,6 +20,9 @@
     ],
     "1.0.3": [
       "Fix loading of custom templates"
+    ],
+    "1.0.4": [
+      "Add support for new feature to disable safe_mode for parsedown"
     ]
   },
   "package": {
@@ -27,7 +30,7 @@
     "platform": "provallo-plugin"
   },
   "requires": {
-    "Frontend": "1.1.6",
+    "Frontend": "1.1.9",
     "Backend": "1.1.3"
   }
 }

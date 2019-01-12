@@ -4,6 +4,7 @@ namespace ProVallo\Plugins\Forms\Components\View;
 
 use ProVallo\Core;
 use ProVallo\Plugins\Forms\Models\Form\Form;
+use ProVallo\Plugins\Frontend\Bootstrap;
 
 class FormExtension extends \Twig_Extension
 {
@@ -28,8 +29,9 @@ class FormExtension extends \Twig_Extension
     
     public function markdownFunction ($data)
     {
+        $config = Bootstrap::getConfig();
         $parser = new \Parsedown();
-        $parser->setSafeMode(true);
+        $parser->setSafeMode($config['parsedown.safe_mode']);
         
         return $parser->parse($data);
     }
