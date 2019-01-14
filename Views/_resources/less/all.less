@@ -40,6 +40,9 @@ form.form {
       font-size: 14px;
       outline: 0 none;
       background: #fff;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
       &:focus {
         border-color: #3498db;
       }
@@ -49,6 +52,22 @@ form.form {
         display: inline-block;
         font-size: 14px;
       }
+    }
+    &.has--error {
+      input, textarea, select {
+        border: 1px solid #e74c3c;
+      }
+    }
+    &.is--ok {
+      input, textarea, select {
+        border: 1px solid #2ecc71;
+      }
+    }
+    .invalid-value {
+      color: #e74c3c;
+      margin: 0 0 15px 15px;
+      font-size: 14px;
+      display: none;
     }
     button {
       border: 1px solid #ccc;

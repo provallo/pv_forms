@@ -6,7 +6,7 @@
   "author": "tyurderi",
   "website": "https://www.yurderi.de",
   "email": "tyurderi@yahoo.de",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "changelog": {
     "1.0.0": [
       "Initial release"
@@ -23,6 +23,9 @@
     ],
     "1.0.4": [
       "Add support for new feature to disable safe_mode for parsedown"
+    ],
+    "1.0.5": [
+      "Implement simple form validation"
     ]
   },
   "package": {

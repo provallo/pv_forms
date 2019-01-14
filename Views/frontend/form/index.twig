@@ -15,23 +15,29 @@
                 {{ markdown(item.config.paragraph) }}
             </div>
         {% elseif item.itemRef == 3 %}
-            <div class="form-item is--{{ item.config.type }} {{ item.config.css }}">
+            <div class="form-item is--{{ item.config.type }} {{ item.config.css }}"{% if item.config.required %} data-required="true"{% endif %}>
                 <label for="{{ name }}">
                     {{ item.config.label }}
+                    {% if item.config.required %}*{% endif %}
                 </label>
 
                 {% if item.config.type == 'textarea' %}
-                    <textarea name="{{ name }}" id="{{ name }}" cols="30" rows="10" placeholder="{{ item.config.placeholder }}"{% if item.config.required %} required{% endif %}>{{ item.config.value }}</textarea>
+                    <textarea name="{{ name }}" id="{{ name }}" cols="30" rows="10" placeholder="{{ item.config.placeholder }}"{% if item.config.required %} required{% endif %} class="input">{{ item.config.value }}</textarea>
                 {% else %}
-                    <input type="{{ item.config.type }}" name="{{ name }}" id="{{ name }}" placeholder="{{ item.config.placeholder }}"{% if item.config.required %} required{% endif %}>
+                    <input type="{{ item.config.type }}" name="{{ name }}" id="{{ name }}" placeholder="{{ item.config.placeholder }}"{% if item.config.required %} required{% endif %} class="input">
                 {% endif %}
+
+                <div class="invalid-value">
+                    {{ item.config.errorText }}
+                </div>
             </div>
         {% elseif item.itemRef == 4 %}
-            <div class="form-item is--select {{ item.config.css }}">
+            <div class="form-item is--select {{ item.config.css }}"{% if item.config.required %} data-required="true"{% endif %}>
                 <label for="{{ name }}">
                     {{ item.config.label }}
+                    {% if item.config.required %}*{% endif %}
                 </label>
-                <select name="{{ name }}" id="{{ name }}"{% if item.config.required %} required{% endif %}>
+                <select name="{{ name }}" id="{{ name }}"{% if item.config.required %} required{% endif %} class="input">
                     <option selected value="" disabled>Please select</option>
                     {% for option in item.config.values %}
                         <option value="{{ option }}">
@@ -39,14 +45,22 @@
                         </option>
                     {% endfor %}
                 </select>
+
+                <div class="invalid-value">
+                    {{ item.config.errorText }}
+                </div>
             </div>
         {% elseif item.itemRef == 5 %}
-            <div class="form-item is--checkbox {{ item.config.css }}">
-                <input type="checkbox" name="{{ name }}" id="{{ name }}">
+            <div class="form-item is--checkbox {{ item.config.css }}"{% if item.config.required %} data-required="true"{% endif %}>
+                <input type="checkbox" name="{{ name }}" id="{{ name }}"{% if item.config.required %} required{% endif %} class="input">
 
                 <label for="{{ name }}">
                     {{ item.config.label }}
                 </label>
+
+                <div class="invalid-value">
+                    {{ item.config.errorText }}
+                </div>
             </div>
         {% elseif item.itemRef == 6 %}
             <div class="form-item is--button {{ item.config.css }}">

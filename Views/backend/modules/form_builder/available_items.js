@@ -76,6 +76,11 @@ export default [
                 name: 'css',
                 label: 'Additional CSS-Classes',
                 type: 'text'
+            },
+            {
+                name: 'errorText',
+                label: 'Error Text',
+                type: 'text'
             }
         ]
     },
@@ -108,6 +113,11 @@ export default [
                 name: 'css',
                 label: 'Additional CSS-Classes',
                 type: 'text'
+            },
+            {
+                name: 'errorText',
+                label: 'Error Text',
+                type: 'text'
             }
         ]
     },
@@ -115,6 +125,11 @@ export default [
         id: 5,
         name: 'Checkbox',
         config: [
+            {
+                name: 'required',
+                label: 'Required',
+                type: 'checkbox'
+            },
             {
                 name: 'checked',
                 label: 'Checked',
@@ -129,6 +144,11 @@ export default [
             {
                 name: 'css',
                 label: 'Additional CSS-Classes',
+                type: 'text'
+            },
+            {
+                name: 'errorText',
+                label: 'Error Text',
                 type: 'text'
             }
         ]
