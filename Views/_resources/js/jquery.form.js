@@ -13,7 +13,13 @@
             return
         }
 
-        $input.on('change input', function (e) {
+        $input.on('change input blur validate', function (e, data) {
+            if (data && data.allowInvalid) {
+                $error.hide()
+                $item.removeClass('has--error').removeClass('is--ok')
+                return
+            }
+
             if (!$input[0].checkValidity()) {
                 $error.show()
                 $item.addClass('has--error').removeClass('is--ok')
@@ -29,13 +35,15 @@
         
         $form.addClass('sending')
         $form.find('.success-text').hide()
-        
+
         $.post($form.attr('action'), $form.serialize(), function (response) {
             $form.removeClass('sending')
             
             if (response.success) {
                 $form.trigger('reset')
                 $form.find('.success-text').show()
+
+                $form.find('.input').trigger('validate', { allowInvalid: true })
             }
         })
     })

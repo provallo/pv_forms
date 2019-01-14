@@ -6,7 +6,7 @@
   "author": "tyurderi",
   "website": "https://www.yurderi.de",
   "email": "tyurderi@yahoo.de",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "changelog": {
     "1.0.0": [
       "Initial release"
@@ -26,6 +26,9 @@
     ],
     "1.0.5": [
       "Implement simple form validation"
+    ],
+    "1.0.6": [
+      "Improve form validation"
     ]
   },
   "package": {
