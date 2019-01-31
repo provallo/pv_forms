@@ -1,6 +1,6 @@
 ;(function ($, window, undefined) {
     "use strict";
-    
+
     var $form = $('form.form')
 
     $form.find('.form-item').each(function() {
@@ -29,23 +29,32 @@
             }
         })
     })
-    
+
     $form.on('submit', function (e) {
+        var formID = $form.attr('data-id')
+        var siteKey = $form.attr('data-site-key')
+
         e.preventDefault()
-        
+
         $form.addClass('sending')
         $form.find('.success-text').hide()
 
-        $.post($form.attr('action'), $form.serialize(), function (response) {
-            $form.removeClass('sending')
-            
-            if (response.success) {
-                $form.trigger('reset')
-                $form.find('.success-text').show()
+        grecaptcha.ready(function () {
+            grecaptcha.execute(siteKey, {action: 'form_' + formID}).then(function (token) {
+                $('input[name="g-recaptcha-response"]').val(token)
 
-                $form.find('.input').trigger('validate', { allowInvalid: true })
-            }
+                $.post($form.attr('action'), $form.serialize(), function (response) {
+                    $form.removeClass('sending')
+
+                    if (response.success) {
+                        $form.trigger('reset')
+                        $form.find('.success-text').show()
+
+                        $form.find('.input').trigger('validate', {allowInvalid: true})
+                    }
+                })
+            })
         })
     })
-    
+
 })(jQuery, window);

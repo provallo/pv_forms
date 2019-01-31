@@ -12,6 +12,7 @@ class Bootstrap extends \ProVallo\Components\Plugin\Bootstrap
     public function install ()
     {
         $this->installDB();
+        $this->createConfig();
         
         return true;
     }
@@ -19,12 +20,31 @@ class Bootstrap extends \ProVallo\Components\Plugin\Bootstrap
     public function update ($previousVersion)
     {
         $this->installDB();
+        $this->createConfig();
         
         return true;
     }
     
+    protected function createConfig ()
+    {
+        Core::di()->get('backend.config')->create($this, [
+            'recaptcha.site_key' => [
+                'type' => 'text',
+                'label' => 'reCAPTCHA SiteKey',
+                'value' => ''
+            ],
+            'recaptcha.secret_key' => [
+                'type' => 'text',
+                'label' => 'reCAPTCHA SecretKey',
+                'value' => ''
+            ]
+        ]);
+    }
+    
     public function execute()
     {
+        require_once __DIR__ . '/vendor/autoload.php';
+        
         if (Core::instance()->getApi() === Core::API_WEB)
         {
             // Register custom controllers
@@ -62,6 +82,14 @@ class Bootstrap extends \ProVallo\Components\Plugin\Bootstrap
                 ];
             });
         }
+    }
+    
+    public static function getConfig ()
+    {
+        $plugin = Core::plugins()->get('Forms');
+        $config = Core::di()->get('backend.config')->get($plugin);
+        
+        return $config;
     }
 
 }

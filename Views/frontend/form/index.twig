@@ -1,4 +1,8 @@
-<form action="{{ url('frontend/form/submit') }}" type="post" class="form">
+<script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha.site_key }}"></script>
+
+<form action="{{ url('frontend/form/submit') }}" type="post" class="form" data-site-key="{{ recaptcha.site_key }}" data-id="{{ form.id }}">
+    <input type="hidden" name="g-recaptcha-response" />
+
     <div class="success-text">
         {{ form.successText }}
     </div>

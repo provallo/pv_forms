@@ -46,8 +46,12 @@ class FormExtension extends \Twig_Extension
         if ($form instanceof Form)
         {
             $form->data = json_decode($form->data, true);
+            $config     = \ProVallo\Plugins\Forms\Bootstrap::getConfig();
             
             $context['form'] = $form;
+            $context['recaptcha'] = [
+                'site_key' => $config['recaptcha.site_key']
+            ];
         }
         
         return Core::view()->render('frontend/form/index', $context);
