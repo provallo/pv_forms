@@ -32,16 +32,4 @@ class FormController extends API
         $entity->submissionTemplate = $input['submissionTemplate'];
     }
     
-    public function listSubmissionAction ()
-    {
-        $id          = self::request()->getParam('id');
-        $submissions = Submission::repository()->findBy([
-            'formID' => $id
-        ], 'id DESC');
-        
-        return self::json()->success([
-            'data' => $submissions->toArray()
-        ]);
-    }
-    
 }

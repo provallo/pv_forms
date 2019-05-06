@@ -9,19 +9,25 @@ use ProVallo\Plugins\Frontend\Bootstrap;
 class FormExtension extends \Twig_Extension
 {
     
-    public function getName()
+    public function getName ()
     {
         return 'Form ViewExtension';
     }
     
-    public function getFunctions()
+    public function getFunctions ()
     {
-        $functions = ['form', 'markdown'];
+        $functions = [
+            'form',
+            'markdown'
+        ];
         $result    = [];
         
-        foreach($functions as $functionName)
+        foreach ($functions as $functionName)
         {
-            $result[] = new \Twig_SimpleFunction($functionName, [$this, $functionName . 'Function']);
+            $result[] = new \Twig_SimpleFunction($functionName, [
+                $this,
+                $functionName . 'Function'
+            ]);
         }
         
         return $result;
@@ -48,8 +54,9 @@ class FormExtension extends \Twig_Extension
             $form->data = json_decode($form->data, true);
             $config     = \ProVallo\Plugins\Forms\Bootstrap::getConfig();
             
-            $context['form'] = $form;
+            $context['form']      = $form;
             $context['recaptcha'] = [
+                'enabled'  => $config['recaptcha.enabled'],
                 'site_key' => $config['recaptcha.site_key']
             ];
         }

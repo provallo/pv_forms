@@ -7,9 +7,9 @@ export default {
         { name: 'changed', type: 'string' },
     ],
     proxy: {
-        list: 'backend/form/listSubmission',
+        list: 'backend/submission/list',
         detail: null,
         save: null,
-        remove: null
+        remove: 'backend/submission/remove'
     }
 }

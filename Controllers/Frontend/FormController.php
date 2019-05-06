@@ -18,25 +18,29 @@ class FormController extends Controller
         
         if ($form instanceof Form)
         {
-            //
-            $gRecaptchaResponse = self::request()->getParam('g-recaptcha-response');
-            $secret             = \ProVallo\Plugins\Forms\Bootstrap::getConfig()['recaptcha.secret_key'];
-            $remoteIp           = self::request()->getServerParam('REMOTE_ADDR');
-            $domain             = Core::di()->get('frontend.domain')->getCurrentDomain()->host;
+            $config = \ProVallo\Plugins\Forms\Bootstrap::getConfig();
             
-            $recaptcha = new \ReCaptcha\ReCaptcha($secret);
-            $resp      = $recaptcha->setExpectedHostname($domain)
-                ->setExpectedAction('form_' . $id)
-                ->setScoreThreshold(0.5)
-                ->verify($gRecaptchaResponse, $remoteIp);
-            
-            if (!$resp->isSuccess())
+            if ($config['recaptcha.enabled'])
             {
-                $errors = $resp->getErrorCodes();
+                $gRecaptchaResponse = self::request()->getParam('g-recaptcha-response');
+                $secret             = $config['recaptcha.secret_key'];
+                $remoteIp           = self::request()->getServerParam('REMOTE_ADDR');
+                $domain             = Core::di()->get('frontend.domain')->getCurrentDomain()->host;
                 
-                return self::json()->failure([
-                    'errors' => $errors
-                ]);
+                $recaptcha = new \ReCaptcha\ReCaptcha($secret);
+                $response  = $recaptcha->setExpectedHostname($domain)
+                    ->setExpectedAction('form_' . $id)
+                    ->setScoreThreshold(0.5)
+                    ->verify($gRecaptchaResponse, $remoteIp);
+                
+                if (!$response->isSuccess())
+                {
+                    $errors = $response->getErrorCodes();
+                    
+                    return self::json()->failure([
+                        'errors' => $errors
+                    ]);
+                }
             }
             
             $data   = json_decode($form->data, true);

@@ -30,6 +30,19 @@
         })
     })
 
+    function sendForm () {
+        $.post($form.attr('action'), $form.serialize(), function (response) {
+            $form.removeClass('sending')
+
+            if (response.success) {
+                $form.trigger('reset')
+                $form.find('.success-text').show()
+
+                $form.find('.input').trigger('validate', {allowInvalid: true})
+            }
+        })
+    }
+
     $form.on('submit', function (e) {
         var formID = $form.attr('data-id')
         var siteKey = $form.attr('data-site-key')
@@ -39,22 +52,16 @@
         $form.addClass('sending')
         $form.find('.success-text').hide()
 
-        grecaptcha.ready(function () {
-            grecaptcha.execute(siteKey, {action: 'form_' + formID}).then(function (token) {
-                $('input[name="g-recaptcha-response"]').val(token)
-
-                $.post($form.attr('action'), $form.serialize(), function (response) {
-                    $form.removeClass('sending')
-
-                    if (response.success) {
-                        $form.trigger('reset')
-                        $form.find('.success-text').show()
-
-                        $form.find('.input').trigger('validate', {allowInvalid: true})
-                    }
+        if (siteKey && siteKey.length > 0) {
+            grecaptcha.ready(function () {
+                grecaptcha.execute(siteKey, {action: 'form_' + formID}).then(function (token) {
+                    $('input[name="g-recaptcha-response"]').val(token)
+                    sendForm()
                 })
             })
-        })
+        } else {
+            sendForm()
+        }
     })
 
 })(jQuery, window);

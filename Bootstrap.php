@@ -28,6 +28,11 @@ class Bootstrap extends \ProVallo\Components\Plugin\Bootstrap
     protected function createConfig ()
     {
         Core::di()->get('backend.config')->create($this, [
+            'recaptcha.enabled' => [
+                'type' => 'checkbox',
+                'label' => 'Use reCAPTCHA',
+                'value' => false
+            ],
             'recaptcha.site_key' => [
                 'type' => 'text',
                 'label' => 'reCAPTCHA SiteKey',
@@ -49,6 +54,7 @@ class Bootstrap extends \ProVallo\Components\Plugin\Bootstrap
         {
             // Register custom controllers
             $this->registerController('Backend', 'Form');
+            $this->registerController('Backend', 'Submission');
             $this->registerController('Frontend', 'Form');
     
             // Register view extensions
