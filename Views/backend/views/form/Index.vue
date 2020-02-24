@@ -1,5 +1,6 @@
 <template>
-    <div class="is--form-view view">
+    <div class="is--form-view is--page-view view">
+        <v-language-select @change="onLanguageChanged" />
         <v-grid ref="grid" :config="gridConfig" @create="create">
             <div class="grid-item user" slot="item" slot-scope="{ model }"
                  :class="{ active: editingModel && editingModel.id === model.id }">
@@ -18,7 +19,7 @@
         <v-detail :disabled="!editingModel">
             <v-tab-menu v-if="editingModel" :key="editingModel.id">
                 <v-tab id="detail" label="Detail">
-                     <v-form-form v-model="editingModel" :grid="$refs.grid" ref="form"></v-form-form>
+                     <v-form-form v-model="editingModel" :grid="$refs.grid" ref="form" :languageID="languageID"></v-form-form>
                 </v-tab>
                 <v-tab id="submission" label="Submissions" v-if="editingModel.id > 0" class="submission-tab">
                     <v-submissions :form="editingModel"></v-submissions>
@@ -31,47 +32,49 @@
 <script>
 import VFormForm from './Form'
 import VSubmissions from './Submissions'
+import VLanguageSelect from '../../modules/LanguageSelector'
 
 export default {
     components: {
         VFormForm,
-        VSubmissions
+        VSubmissions,
+        VLanguageSelect
     },
     data() {
         let me = this
-        
+
         return {
             gridConfig: {
                 model: me.$models.form
             },
-            editingModel: null
+            editingModel: null,
+            languageID: 0
         }
     },
-    mounted () {
+    mounted() {
         let me = this
-    
-        
+
     },
     methods: {
-        create () {
+        create() {
             let me = this
-            
+
             me.editingModel = me.$models.form.create()
             me.$nextTick(() => me.$refs.form.reset())
         },
-        edit (model) {
+        edit(model) {
             let me = this
-            
+
             me.editingModel = model
             me.$nextTick(() => me.$refs.form.reset())
         },
-        remove (model) {
+        remove(model) {
             let me = this
-            
+
             me.$models.form.remove(model).then((success) => {
                 if (success) {
                     me.$refs.grid.load()
-                    
+
                     if (me.editingModel && me.editingModel.id === model.id) {
                         me.editingModel = null
                     }
@@ -85,6 +88,11 @@ export default {
             }).catch(error => {
                 console.log(error)
             })
+        },
+        onLanguageChanged (languageID) {
+            const me = this;
+            
+            me.languageID = languageID;
         }
     }
 }

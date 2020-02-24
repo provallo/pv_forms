@@ -23,6 +23,11 @@ class Form extends Entity
     
     public $changed;
     
+    public function initialize ()
+    {
+        $this->hasMany(Translation::class, 'formID', 'id')->setName('translations');
+    }
+    
     public function validate ()
     {
         return [

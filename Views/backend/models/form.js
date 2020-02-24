@@ -7,6 +7,7 @@ export default {
         { name: 'submissionTemplate', type: 'string', filterable: true },
         { name: 'created', type: 'string' },
         { name: 'changed', type: 'string' },
+        { name: 'translations', type: 'array' }
     ],
     proxy: {
         list: 'backend/form/list',

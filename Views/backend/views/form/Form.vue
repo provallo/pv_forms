@@ -13,19 +13,19 @@
             <label for="label">
                 Label
             </label>
-            <v-input type="text" id="label" v-model="value.label"></v-input>
+            <v-input type="text" id="label" v-model="getTranslated(value).label"></v-input>
         </div>
         <div class="form-item">
             <label for="successText">
                 Success Text
             </label>
-            <v-input type="textarea" id="successText" v-model="value.successText"></v-input>
+            <v-input type="textarea" id="successText" v-model="getTranslated(value).successText"></v-input>
         </div>
         <div class="form-item">
             <label for="submissionTemplate">
                 Submission Template
             </label>
-            <v-input type="textarea" id="submissionTemplate" v-model="value.submissionTemplate"></v-input>
+            <v-input type="textarea" id="submissionTemplate" v-model="getTranslated(value).submissionTemplate"></v-input>
         </div>
         <div class="form-item" :key="value.id">
             <v-form-builder v-model="value.data" ref="formBuilder"></v-form-builder>
@@ -37,7 +37,8 @@
 export default {
     props: [
         'value',
-        'grid'
+        'grid',
+        'languageID'
     ],
     data() {
         return {
@@ -47,22 +48,23 @@ export default {
                     primary: true,
                     name: 'submit'
                 }
-            ],
+            ]
         }
     },
     methods: {
-        submit ({ setMessage, setLoading, setProgress }) {
+        submit({ setMessage, setLoading, setProgress }) {
             let me = this
-        
+
             me.value.data = me.$refs.formBuilder.toString()
-        
+
             setLoading(true)
             me.$models.form.save(me.value).then(({ success, data, messages }) => {
                 if (success) {
                     setMessage('success', 'The form were saved successfully')
                     setLoading(false)
-                
+
                     me.value.id = data.id
+                    me.value.translations = data.translations
                     me.grid.load()
                 } else {
                     setMessage('error', messages[0])
@@ -73,10 +75,13 @@ export default {
                 setLoading(false)
             })
         },
-        reset () {
+        reset() {
             let me = this
-            
+
             me.$refs.form.reset()
+        },
+        getTranslated (model) {
+            return model.translations.find(t => t.languageID === this.languageID) || model;
         }
     }
 }
