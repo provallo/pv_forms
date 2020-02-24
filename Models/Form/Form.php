@@ -31,18 +31,9 @@ class Form extends Entity
     public function validate ()
     {
         return [
-            'label' => [
-                'required' => 'Please enter a label'
-            ],
-            'data'  => [
+            'data' => [
                 'required' => 'The form configuration can not be empty'
             ],
-            'successText' => [
-                'required' => 'Please enter a success text'
-            ],
-            'submissionTemplate' => [
-                'required' => 'Please enter a submission template'
-            ]
         ];
     }
     

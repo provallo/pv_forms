@@ -1,12 +1,12 @@
 <template>
     <div class="is--form-view is--page-view view">
-        <v-language-select @change="onLanguageChanged" />
+        <v-language-select @change="onLanguageChanged" ref="languageSelect" />
         <v-grid ref="grid" :config="gridConfig" @create="create">
             <div class="grid-item user" slot="item" slot-scope="{ model }"
                  :class="{ active: editingModel && editingModel.id === model.id }">
                 <div class="item-meta" @click="edit(model)">
                     <div class="item-label">
-                        {{ model.label }}
+                        {{ getTranslated(model).label }}
                     </div>
                 </div>
                 <div class="item-actions">
@@ -60,6 +60,17 @@ export default {
             let me = this
 
             me.editingModel = me.$models.form.create()
+            me.editingModel.translations = []
+
+            me.$refs.languageSelect.languages.forEach((language) => {
+                me.editingModel.translations.push({
+                    languageID: language.id,
+                    label: '',
+                    successText: '',
+                    submissionTemplate: ''
+                })
+            })
+
             me.$nextTick(() => me.$refs.form.reset())
         },
         edit(model) {
@@ -89,10 +100,13 @@ export default {
                 console.log(error)
             })
         },
-        onLanguageChanged (languageID) {
-            const me = this;
-            
-            me.languageID = languageID;
+        onLanguageChanged(languageID) {
+            const me = this
+
+            me.languageID = languageID
+        },
+        getTranslated (model) {
+            return model.translations.find(t => t.languageID === this.languageID) || model;
         }
     }
 }
