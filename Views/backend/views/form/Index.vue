@@ -11,7 +11,7 @@
                 </div>
                 <div class="item-actions">
                     <div class="item-action" @click="remove(model)">
-                        <fa icon="trash"></fa>
+                        <fa icon="trash" />
                     </div>
                 </div>
             </div>
@@ -19,10 +19,11 @@
         <v-detail :disabled="!editingModel">
             <v-tab-menu v-if="editingModel" :key="editingModel.id">
                 <v-tab id="detail" label="Detail">
-                     <v-form-form v-model="editingModel" :grid="$refs.grid" ref="form" :languageID="languageID"></v-form-form>
+                     <v-form-form v-model="editingModel" :grid="$refs.grid" ref="form"
+                                  :languageID="languageID" :languages="languages" />
                 </v-tab>
                 <v-tab id="submission" label="Submissions" v-if="editingModel.id > 0" class="submission-tab">
-                    <v-submissions :form="editingModel"></v-submissions>
+                    <v-submissions :form="editingModel" />
                 </v-tab>
             </v-tab-menu>
         </v-detail>
@@ -48,12 +49,9 @@ export default {
                 model: me.$models.form
             },
             editingModel: null,
-            languageID: 0
+            languageID: 0,
+            languages: []
         }
-    },
-    mounted() {
-        let me = this
-
     },
     methods: {
         create() {
@@ -62,7 +60,7 @@ export default {
             me.editingModel = me.$models.form.create()
             me.editingModel.translations = []
 
-            me.$refs.languageSelect.languages.forEach((language) => {
+            me.languages.forEach((language) => {
                 me.editingModel.translations.push({
                     languageID: language.id,
                     label: '',
@@ -104,6 +102,7 @@ export default {
             const me = this
 
             me.languageID = languageID
+            me.languages = me.$refs.languageSelect.languages;
         },
         getTranslated (model) {
             return model.translations.find(t => t.languageID === this.languageID) || model;

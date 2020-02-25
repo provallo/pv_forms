@@ -26,13 +26,15 @@
                     <label :for="item.name">
                         {{ item.label }}
                     </label>
-                    <v-input type="text" :id="item.name" v-model="value.config[item.name]"></v-input>
+                    <v-input type="text" :id="item.name"
+                             v-model="getTranslated(item)[item.name]" />
                 </template>
                 <template v-else-if="item.type === 'textarea'">
                     <label :for="item.name">
                         {{ item.label }}
                     </label>
-                    <v-input type="textarea" :id="item.name" v-model="value.config[item.name]"></v-input>
+                    <v-input type="textarea" :id="item.name"
+                             v-model="getTranslated(item)[item.name]" />
                 </template>
                 <template v-else-if="item.type === 'markdown'">
                     <label :for="item.name">
@@ -41,22 +43,26 @@
                             (<a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown</a> is supported)
                         </small>
                     </label>
-                    <v-input type="textarea" :id="item.name" v-model="value.config[item.name]" class="is--markdown"></v-input>
+                    <v-input type="textarea" :id="item.name"
+                             v-model="getTranslated(item)[item.name]"
+                             class="is--markdown" />
                 </template>
                 <template v-else-if="item.type === 'checkbox'">
-                    <v-checkbox :name="item.name" :label="item.label" v-model="value.config[item.name]"></v-checkbox>
+                    <v-checkbox :name="item.name" :label="item.label"
+                                v-model="getTranslated(item)[item.name]" />
                 </template>
                 <template v-else-if="item.type === 'select'">
                     <label :for="item.name">
                         {{ item.label }}
                     </label>
-                    <v-select :data="item.store" displayField="label" valueField="id" v-model="value.config[item.name]"></v-select>
+                    <v-select :data="item.store" displayField="label" valueField="id"
+                              v-model="getTranslated(item)[item.name]" />
                 </template>
                 <template v-else-if="item.type === 'list'">
                     <label :for="item.name">
                         {{ item.label }}
                     </label>
-                    <v-list v-model="value.config[item.name]"></v-list>
+                    <v-list v-model="getTranslated(item)[item.name]" />
                 </template>
                 <template v-else>
                     Unknown type
@@ -83,23 +89,24 @@ export default {
         item: {
             type: Object,
             required: true
+        },
+        languageID: {
+            type: Number,
+            required: true
         }
     },
     computed: {
         label () {
             let me = this
             let main = me.item.config.find(c => c.main === 1)
+            let values = null
             
-            if (main && me.value.config[main.name]) {
-                return me.item.name + ': ' + me.value.config[main.name]
+            if (main && (values = me.getTranslated(main))) {
+                return me.item.name + ': ' + values[main.name]
             }
             
             return 'Unnamed ' + me.item.name
-        }
-    },
-    mounted () {
-        let me = this
-        
+        },
     },
     methods: {
         close () {
@@ -126,6 +133,14 @@ export default {
             let me = this
             
             me.$emit('moveDown')
+        },
+        getTranslated (item) {
+            if (item.translatable) {
+                return this.value.translations
+                    .find(t => t.languageID === this.languageID) || this.value.config
+            }
+            
+            return this.value.config
         }
     }
 }

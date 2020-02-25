@@ -8,7 +8,8 @@ export default [
                 label: 'Title',
                 
                 main: 1,
-                type: 'text'
+                type: 'text',
+                translatable: true
             },
             {
                 name: 'css',
@@ -26,7 +27,8 @@ export default [
                 label: 'Paragraph',
                 
                 main: 1,
-                type: 'markdown'
+                type: 'markdown',
+                translatable: true
             },
             {
                 name: 'css',
@@ -48,7 +50,8 @@ export default [
                 name: 'label',
                 label: 'Label',
                 main: 1,
-                type: 'text'
+                type: 'text',
+                translatable: true
             },
             {
                 name: 'type',
@@ -65,12 +68,14 @@ export default [
             {
                 name: 'placeholder',
                 label: 'Placeholder',
-                type: 'text'
+                type: 'text',
+                translatable: true
             },
             {
                 name: 'value',
                 label: 'Value',
-                type: 'text'
+                type: 'text',
+                translatable: true
             },
             {
                 name: 'css',
@@ -80,7 +85,8 @@ export default [
             {
                 name: 'errorText',
                 label: 'Error Text',
-                type: 'text'
+                type: 'text',
+                translatable: true
             }
         ]
     },
@@ -97,17 +103,20 @@ export default [
                 name: 'label',
                 label: 'Label',
                 main: 1,
-                type: 'text'
+                type: 'text',
+                translatable: true
             },
             {
                 name: 'values',
                 label: 'Values',
-                type: 'list'
+                type: 'list',
+                translatable: true
             },
             {
                 name: 'value',
                 label: 'Value',
-                type: 'text'
+                type: 'text',
+                translatable: true
             },
             {
                 name: 'css',
@@ -117,7 +126,8 @@ export default [
             {
                 name: 'errorText',
                 label: 'Error Text',
-                type: 'text'
+                type: 'text',
+                translatable: true
             }
         ]
     },
@@ -139,7 +149,8 @@ export default [
                 name: 'label',
                 label: 'Label',
                 main: 1,
-                type: 'text'
+                type: 'text',
+                translatable: true
             },
             {
                 name: 'css',
@@ -149,7 +160,8 @@ export default [
             {
                 name: 'errorText',
                 label: 'Error Text',
-                type: 'text'
+                type: 'text',
+                translatable: true
             }
         ]
     },
@@ -161,7 +173,8 @@ export default [
                 name: 'label',
                 label: 'Label',
                 main: 1,
-                type: 'text'
+                type: 'text',
+                translatable: true
             },
             {
                 name: 'type',

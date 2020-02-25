@@ -28,7 +28,8 @@
             <v-input type="textarea" id="submissionTemplate" v-model="getTranslated(value).submissionTemplate"></v-input>
         </div>
         <div class="form-item" :key="value.id">
-            <v-form-builder v-model="value.data" ref="formBuilder"></v-form-builder>
+            <v-form-builder v-model="value.data" ref="formBuilder"
+                            :languageID="languageID" :languages="languages"></v-form-builder>
         </div>
     </v-form>
 </template>
@@ -38,7 +39,8 @@ export default {
     props: [
         'value',
         'grid',
-        'languageID'
+        'languageID',
+        'languages'
     ],
     data() {
         return {
@@ -80,8 +82,8 @@ export default {
 
             me.$refs.form.reset()
         },
-        getTranslated (model) {
-            return model.translations.find(t => t.languageID === this.languageID) || model;
+        getTranslated(model) {
+            return model.translations.find(t => t.languageID === this.languageID) || model
         }
     }
 }
