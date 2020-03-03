@@ -6,7 +6,7 @@
   "author": "tyurderi",
   "website": "https://www.yurderi.de",
   "email": "tyurderi@yahoo.de",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "changelog": {
     "1.0.0": [
       "Initial release"
@@ -36,6 +36,12 @@
     "1.2.0": [
       "Add config to disable reCAPTCHA",
       "Improve backend view"
+    ],
+    "1.3.0": [
+      "Apply translations to already existing form elements",
+      "Translate form item fields in frontend and backend",
+      "Add translations also when creating a new form WIP Validator...",
+      "Translate basic form fields"
     ]
   },
   "package": {
