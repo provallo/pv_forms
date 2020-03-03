@@ -74,7 +74,37 @@ export default {
             try {
                 me.config = JSON.parse(me.value)
 
-                // todo: apply translations
+                me.config.items.forEach(item => {
+                    if (!item.hasOwnProperty('translations')) {
+                        item.translations = []
+                    }
+
+                    me.languages.forEach(language => {
+                        let translation = item.translations.find(t => t.languageID === language.id)
+
+                        if (!translation) {
+                            translation = {
+                                languageID: language.id
+                            }
+
+                            item.translations.push(translation)
+                        }
+
+                        for (let key in item.config) {
+                            if (!item.config.hasOwnProperty(key)) {
+                                continue
+                            }
+
+                            let value = item.config[key]
+                            let configItem = availableItems.find(i => i.id === item.itemRef)
+                            let configEl = configItem.config.find(e => e.name === key)
+
+                            if (configEl.translatable && !translation.hasOwnProperty(key)) {
+                                translation[key] = value
+                            }
+                        }
+                    })
+                })
             }
             catch (ex) {
 
